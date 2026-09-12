@@ -21,8 +21,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Ghimire Kitchen Wares - ERP & POS",
-  description: "Enterprise Resource Planning and Point of Sale system for Ghimire Kitchen Wares",
+  title: "Retail Management System - ERP & POS",
+  description: "Enterprise Resource Planning and Point of Sale system for RMS",
 };
 
 export default function RootLayout({

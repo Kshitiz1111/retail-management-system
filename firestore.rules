@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Products - Public read access for store, authenticated write
+    match /products/{productId} {
+      allow read: if true; // Public read for storefront
+      allow write: if isAuthenticated(); // Only authenticated users can write
+    }
+    
+    // Settings - Public read for loyalty rules, authenticated write
+    match /settings/{settingId} {
+      allow read: if true; // Public read for loyalty rules display
+      allow write: if isAuthenticated(); // Authenticated users can write (admin will be checked in app)
+    }
+    
+    // Orders - Public read/create for guest checkout, authenticated update
+    match /orders/{orderId} {
+      allow read: if true; // Public read (service layer validates phone/email for security)
+      allow create: if true; // Anyone can create orders (store checkout)
+      allow update: if isAuthenticated(); // Only authenticated users can update (admin/staff)
+    }
+    
+    // Customers - Read own data or authenticated, create for signup, update own or authenticated
+    match /customers/{customerId} {
+      allow read: if isAuthenticated(); // Authenticated users can read (app will filter by customerId)
+      allow create: if true; // Allow signup
+      allow update: if isAuthenticated(); // Authenticated users can update (app will check permissions)
+    }
+    
+    // Users (admin/staff) - Only authenticated users
+    match /users/{userId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Sales - Only authenticated users
+    match /sales/{saleId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Credit transactions - Only authenticated users
+    match /credit_transactions/{creditId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Vendors - Only authenticated users
+    match /vendors/{vendorId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Purchase orders - Only authenticated users
+    match /purchase_orders/{poId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Ledger entries - Only authenticated users
+    match /ledger_entries/{entryId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Employees - Only authenticated users
+    match /employees/{employeeId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Attendance - Only authenticated users
+    match /attendance/{attendanceId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Sales Returns - Only authenticated users
+    match /sales_returns/{returnId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Vendor Returns - Only authenticated users
+    match /vendor_returns/{returnId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Default: Require authentication for everything else
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}
+

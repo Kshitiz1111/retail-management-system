@@ -193,7 +193,7 @@ export default function CreateProductPage() {
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       required
-                      placeholder="Kitchen Appliances"
+                      placeholder="Appliances"
                     />
                   </div>
 

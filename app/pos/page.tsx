@@ -376,7 +376,7 @@ export default function POSPage() {
             <div className="flex flex-col h-full">
               {/* Logo/Header */}
               <div className="p-6 border-b">
-                <h1 className="text-xl font-bold">Ghimire Kitchen</h1>
+                <h1 className="text-xl font-bold">RMS</h1>
                 <p className="text-sm text-gray-500">ERP & POS System</p>
               </div>
 
